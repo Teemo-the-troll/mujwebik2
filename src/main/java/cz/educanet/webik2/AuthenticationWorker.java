@@ -1,6 +1,7 @@
 package cz.educanet.webik2;
 
 
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -8,7 +9,9 @@ import javax.ws.rs.core.Response;
 @Path("/authentication")
 @Produces (MediaType.APPLICATION_JSON)
 public class AuthenticationWorker {
-    private final AuthenticationManager manager = new AuthenticationManager();
+
+    @Inject
+    private AuthenticationManager manager;
 
     @Path("/login")
     @POST
@@ -24,6 +27,8 @@ public class AuthenticationWorker {
         else
             return manager.registerUser(name,userName,email,password).build();
     }
+
+
 
 
 }

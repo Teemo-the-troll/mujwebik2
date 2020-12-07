@@ -2,12 +2,17 @@ package cz.educanet.webik2;
 
 import com.google.gson.Gson;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 
+@ApplicationScoped
 public class AuthenticationManager {
     private final ArrayList<User> loggedUsers = new ArrayList<User>();
-    private final UserManager userManager = new UserManager();
+    @Inject
+    private UserManager userManager;
+
     private final Gson gson = new Gson();
 
     public Response.ResponseBuilder getLoggedUsers() {
@@ -33,7 +38,6 @@ public class AuthenticationManager {
         if ((name == null) || (userName == null) || (email == null) || (password == null))
             return Response.status(400, "None can be empty");
         else {
-
             return userManager.createUser(name, userName, email, password);
         }
     }
