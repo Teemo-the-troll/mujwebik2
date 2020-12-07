@@ -1,0 +1,6 @@
+cz\educanet\webik2\AuthenticationManager.class
+cz\educanet\webik2\User.class
+cz\educanet\webik2\UserManager.class
+cz\educanet\webik2\ApiConf.class
+cz\educanet\webik2\UserWorker.class
+cz\educanet\webik2\AuthenticationWorker.class
