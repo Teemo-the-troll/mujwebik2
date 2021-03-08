@@ -15,8 +15,19 @@ public class AuthenticationManager {
 
     private final Gson gson = new Gson();
 
-    public Response.ResponseBuilder getLoggedUsers() {
-        return Response.ok(gson.toJson(loggedUsers));
+    public Response.ResponseBuilder getLoggedUsers(Token token) {
+        if (validate(token))
+            return Response.ok(gson.toJson(loggedUsers));
+        else
+            return Response.status(403, "Invalid token");
+    }
+
+    public boolean validate(Token token){
+        for (User loggedUser : loggedUsers) {
+            if (loggedUser.getToken() == token)
+                return true;
+        }
+        return false;
     }
 
     public Response.ResponseBuilder loginUser(String username, String password) {
@@ -26,6 +37,7 @@ public class AuthenticationManager {
                 if (!u.getPassword().equals(password))
                     return Response.status(400, "Invalid Username or password");
                 else {
+                    u.setToken(new Token());
                     loggedUsers.add(u);
                     return Response.ok();
                 }
@@ -42,8 +54,8 @@ public class AuthenticationManager {
         }
     }
 
-    public Response.ResponseBuilder logoutUser(String username) {
-        if (loggedUsers.stream().anyMatch(u -> u.getUserName().equals(username))) {
+    public Response.ResponseBuilder logoutUser(String username, Token token) {
+        if (loggedUsers.stream().anyMatch(u -> u.getUserName().equals(username) && (u.getToken() == token))) {
             loggedUsers.remove(loggedUsers.stream().filter(u -> u.getUserName().equals(username)).findFirst().get());
             return Response.ok();
         } else return Response.status(404, "user not found or not logged in");

@@ -5,6 +5,15 @@ public class User {
     private String userName;
     private String email;
     private String password;
+    private Token token;
+
+    public Token getToken() {
+        return token;
+    }
+
+    public void setToken(Token token) {
+        this.token = token;
+    }
 
     public User(String name, String userName, String email, String password) {
         this.name = name;

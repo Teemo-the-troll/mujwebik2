@@ -21,8 +21,8 @@ public class UserWorker {
 
 
     @GET
-    public Response loggedinUsers(){
-        return manager.getLoggedUsers().build();
+    public Response loggedinUsers(Token token){
+        return manager.getLoggedUsers(token).build();
     }
 
     /*
@@ -33,8 +33,8 @@ public class UserWorker {
 
     @Path("/authentication/logout")
     @DELETE
-    public Response logoutUser(@QueryParam("username") String username) {
-        return manager.logoutUser(username).build();
+    public Response logoutUser(@QueryParam("username") String username, Token token) {
+        return manager.logoutUser(username, token).build();
     }
 
 
